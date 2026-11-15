@@ -50,7 +50,7 @@ function ProductPage() {
           <ArrowLeft className="h-3.5 w-3.5" /> {craft.name}
         </Link>
         <div className="mt-8 grid gap-12 lg:grid-cols-2 lg:gap-20">
-          <div className="bg-muted">
+          <div className="self-start bg-muted">
             <img src={product.img} alt={product.name} className="aspect-[4/5] w-full object-cover" />
           </div>
           <div className="animate-rise lg:pt-10">
