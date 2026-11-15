@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Product, craft and journal content lives in `src/lib/catalog.ts` as static data; pages read from it so content edits happen in one place.
+- Shared header/footer render in `src/routes/__root.tsx`; pages render only their own sections.
