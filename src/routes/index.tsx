@@ -175,7 +175,8 @@ function CraftMarquee() {
 }
 
 function Collections() {
-  const [feature, ...rest] = crafts;
+  const feature = crafts[0]!;
+  const rest = crafts.slice(1);
   return (
     <section id="crafts" className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
