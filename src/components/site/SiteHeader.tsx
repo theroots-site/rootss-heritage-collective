@@ -34,7 +34,6 @@ export function SiteHeader() {
         </nav>
         <Link
           to="/shop"
-          search={{}}
           className="eyebrow hidden border border-foreground px-5 py-3 transition-colors hover:bg-foreground hover:text-background lg:inline-flex"
         >
           Shop the edit
