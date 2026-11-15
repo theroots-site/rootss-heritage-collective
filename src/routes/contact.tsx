@@ -6,7 +6,7 @@ import { getProduct } from "@/lib/catalog";
 
 export const Route = createFileRoute("/contact")({
   validateSearch: (search: Record<string, unknown>): { piece?: string } =>
-    typeof search.piece === "string" ? { piece: search.piece } : {},
+    typeof search["piece"] === "string" ? { piece: search["piece"] } : {},
   head: () => ({
     meta: [
       { title: "Contact Rootss — Enquiries, Orders & Collaborations" },

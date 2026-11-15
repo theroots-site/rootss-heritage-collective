@@ -11,7 +11,7 @@ export function EnquiryForm({
   submitLabel = "Send enquiry",
 }: {
   topics: string[];
-  defaultTopic?: string;
+  defaultTopic?: string | undefined;
   defaultMessage?: string;
   submitLabel?: string;
 }) {
