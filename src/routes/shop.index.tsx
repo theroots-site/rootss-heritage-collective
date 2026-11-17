@@ -1,26 +1,71 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Search } from "lucide-react";
 
-import { crafts, products, type CraftSlug } from "@/lib/catalog";
-import { PageIntro } from "@/components/site/PageIntro";
+import {
+  availabilityLabel,
+  collections,
+  products,
+  searchProducts,
+  type Availability,
+  type CollectionSlug,
+  type Product,
+} from "@/lib/catalog";
 import { ProductCard } from "@/components/site/ProductCard";
+import { PageHero } from "@/components/site/PageHero";
+
+type Sort = "curated" | "name-asc" | "name-desc" | "size-desc";
+
+type ShopSearch = {
+  q?: string;
+  collection?: CollectionSlug;
+  availability?: Availability;
+  sort?: Sort;
+};
+
+const collectionSlugs = collections.map((c) => c.slug) as string[];
+const availabilities: Availability[] = ["on-enquiry", "made-to-order", "pre-order"];
+const sorts: { value: Sort; label: string }[] = [
+  { value: "curated", label: "Curated" },
+  { value: "name-asc", label: "Name A–Z" },
+  { value: "name-desc", label: "Name Z–A" },
+  { value: "size-desc", label: "Largest first" },
+];
+
+export function sortProducts(list: Product[], sort: Sort | undefined): Product[] {
+  const height = (p: Product) => {
+    const m = p.size?.match(/(\d+(?:\.\d+)?)/);
+    return m ? Number(m[1]) : -1;
+  };
+  const copy = [...list];
+  if (sort === "name-asc") copy.sort((a, b) => a.name.localeCompare(b.name));
+  if (sort === "name-desc") copy.sort((a, b) => b.name.localeCompare(a.name));
+  if (sort === "size-desc") copy.sort((a, b) => height(b) - height(a));
+  return copy;
+}
 
 export const Route = createFileRoute("/shop/")({
-  validateSearch: (search: Record<string, unknown>): { craft?: CraftSlug } => {
-    const c = search["craft"];
-    return crafts.some((x) => x.slug === c) ? { craft: c as CraftSlug } : {};
+  validateSearch: (s: Record<string, unknown>): ShopSearch => {
+    const out: ShopSearch = {};
+    const q = s["q"];
+    if (typeof q === "string" && q.trim()) out.q = q.slice(0, 80);
+    const c = s["collection"];
+    if (typeof c === "string" && collectionSlugs.includes(c)) out.collection = c as CollectionSlug;
+    const a = s["availability"];
+    if (typeof a === "string" && (availabilities as string[]).includes(a)) out.availability = a as Availability;
+    const so = s["sort"];
+    if (typeof so === "string" && sorts.some((x) => x.value === so)) out.sort = so as Sort;
+    return out;
   },
   head: () => ({
     meta: [
-      { title: "Shop Handcrafted Indian Art & Décor — Rootss" },
+      { title: "Shop Authentic Dhokra Art & Handmade Brass Décor — the rootSS" },
       {
         name: "description",
-        content: "Shop Dokra sculptures, terracotta, Gond and Warli art, carved artefacts and handcrafted jewellery.",
+        content:
+          "Browse handmade Dhokra brass deities, folk figures, animal sculptures, lighting, tableware and jewellery. Every piece one of a kind; prices on enquiry.",
       },
-      { property: "og:title", content: "Shop the Rootss Collection" },
-      {
-        property: "og:description",
-        content: "Authentic, artisan-made pieces from across India — in small batches, never mass produced.",
-      },
+      { property: "og:title", content: "Shop the collection — the rootSS" },
+      { property: "og:description", content: "Authentic Dhokra brass, hand-cast by artisan families of Bengal." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -28,40 +73,130 @@ export const Route = createFileRoute("/shop/")({
   component: Shop,
 });
 
-function Shop() {
-  const { craft } = Route.useSearch();
-  const list = craft ? products.filter((p) => p.craft === craft) : products;
-  const active = crafts.find((c) => c.slug === craft);
+function Chip({ active, children, ...link }: { active: boolean; children: React.ReactNode } & React.ComponentProps<typeof Link>) {
+  return (
+    <Link
+      {...link}
+      className={`eyebrow whitespace-nowrap border px-4 py-2.5 transition-colors ${
+        active ? "border-forest bg-forest text-forest-foreground" : "border-border hover:border-foreground"
+      }`}
+    >
+      {children}
+    </Link>
+  );
+}
 
-  const chip = "eyebrow border px-4 py-2.5 transition-colors";
-  const on = "border-foreground bg-foreground text-background";
-  const off = "border-border text-muted-foreground hover:border-foreground hover:text-foreground";
+function Shop() {
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+  let list = products;
+  if (search.collection) list = list.filter((p) => p.collection === search.collection);
+  if (search.availability) list = list.filter((p) => p.availability === search.availability);
+  list = sortProducts(searchProducts(list, search.q ?? ""), search.sort);
 
   return (
     <>
-      <PageIntro eyebrow="The Collection" title={active ? active.name : <>Pieces with a <em>past</em>.</>}>
-        {active ? active.blurb : "Small-batch, artisan-made objects from across India. Each one comes with its story."}
-      </PageIntro>
+      <PageHero
+        kicker="Shop · The Heritage Collection"
+        title={
+          <>
+            Every piece, <em>one of a kind</em>
+          </>
+        }
+        intro="Authentic Dhokra metal craft, hand-cast in brass, bronze and bell metal. Prices are shared personally on enquiry — add pieces to your shortlist and send them to us in one message."
+      />
 
-      <section className="mx-auto max-w-7xl px-6 pb-28 md:px-10">
-        <div className="flex flex-wrap gap-3 border-y border-border py-6">
-          <Link to="/shop" className={`${chip} ${!craft ? on : off}`}>
-            All
-          </Link>
-          {crafts.map((c) => (
-            <Link key={c.slug} to="/shop" search={{ craft: c.slug }} className={`${chip} ${craft === c.slug ? on : off}`}>
-              {c.name}
-            </Link>
-          ))}
+      <section className="mx-auto max-w-7xl px-6 pb-24 md:px-10">
+        <div className="sticky top-[4.6rem] z-20 -mx-6 border-y border-border bg-background/95 px-6 py-4 backdrop-blur-md md:-mx-10 md:px-10 lg:top-[8.1rem]">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+            <div className="no-scrollbar flex gap-2 overflow-x-auto">
+              <Chip to="/shop" search={(prev) => ({ ...prev, collection: undefined })} active={!search.collection}>
+                All
+              </Chip>
+              {collections.map((c) => (
+                <Chip key={c.slug} to="/shop" search={(prev) => ({ ...prev, collection: c.slug })} active={search.collection === c.slug}>
+                  {c.name}
+                </Chip>
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const v = new FormData(e.currentTarget).get("q");
+                  void navigate({ to: ".", search: (prev) => ({ ...prev, q: typeof v === "string" && v.trim() ? v.trim() : undefined }) });
+                }}
+                className="flex items-center gap-2 border-b border-foreground/30"
+              >
+                <Search className="h-4 w-4 text-muted-foreground" />
+                <input
+                  key={search.q ?? ""}
+                  name="q"
+                  defaultValue={search.q ?? ""}
+                  placeholder="Search name or code"
+                  aria-label="Search pieces"
+                  className="w-44 bg-transparent py-2 text-sm focus:outline-hidden"
+                />
+              </form>
+              <select
+                aria-label="Availability"
+                value={search.availability ?? ""}
+                onChange={(e) =>
+                  void navigate({
+                    to: ".",
+                    search: (prev) => ({ ...prev, availability: (e.target.value || undefined) as Availability | undefined }),
+                  })
+                }
+                className="border-b border-foreground/30 bg-transparent py-2 text-sm"
+              >
+                <option value="">All availability</option>
+                {availabilities.map((a) => (
+                  <option key={a} value={a}>
+                    {availabilityLabel[a]}
+                  </option>
+                ))}
+              </select>
+              <select
+                aria-label="Sort"
+                value={search.sort ?? "curated"}
+                onChange={(e) =>
+                  void navigate({
+                    to: ".",
+                    search: (prev) => ({ ...prev, sort: e.target.value === "curated" ? undefined : (e.target.value as Sort) }),
+                  })
+                }
+                className="border-b border-foreground/30 bg-transparent py-2 text-sm"
+              >
+                {sorts.map((s) => (
+                  <option key={s.value} value={s.value}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
-        <p className="mt-6 text-sm text-muted-foreground">
+
+        <p className="eyebrow mt-8 text-muted-foreground">
           {list.length} {list.length === 1 ? "piece" : "pieces"}
+          {search.q ? ` matching “${search.q}”` : ""}
         </p>
-        <div className="mt-8 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((p) => (
-            <ProductCard key={p.slug} product={p} />
-          ))}
-        </div>
+
+        {list.length === 0 ? (
+          <div className="mt-10 border border-border bg-paper p-12 text-center">
+            <p className="font-display text-3xl">No pieces match that search.</p>
+            <p className="mt-3 text-muted-foreground">Try another name or product code, or ask us — more designs are available than are shown here.</p>
+            <Link to="/shop" className="eyebrow mt-6 inline-block bg-forest px-6 py-4 text-forest-foreground">
+              Clear filters
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-10 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+            {list.map((p, i) => (
+              <ProductCard key={p.slug} product={p} priority={i < 4} />
+            ))}
+          </div>
+        )}
       </section>
     </>
   );
