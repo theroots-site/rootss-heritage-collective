@@ -2,6 +2,12 @@
 // "the rootSS Catalogue 11.2026". Prices are null until the owner confirms them.
 // A null code or size means the catalogue leaves it blank: pages say "confirmed on enquiry".
 import { photo } from "./images";
+import livingFoyer from "@/assets/living-foyer.jpg";
+import livingRoom from "@/assets/living-room.jpg";
+import livingSacred from "@/assets/living-sacred.jpg";
+import livingDining from "@/assets/living-dining.jpg";
+import livingStudy from "@/assets/living-study.jpg";
+import livingGlobal from "@/assets/living-global.jpg";
 
 /* ---------------------------------------------------------------- craft lines */
 
@@ -329,8 +335,85 @@ export type Room = {
   pieces: string[];
 };
 
-/** Room photos are imported by the page; `image` here names which one. */
-export const rooms: Omit<Room, "image">[] & { imageKey: string }[] = [] as never;
+export const rooms: Room[] = [
+  {
+    slug: "entrance",
+    name: "The Entrance",
+    kicker: "First impressions",
+    intro: "The entrance sets the tone of a home. One sculptural piece on a console says more than a crowded wall.",
+    tips: [
+      "Choose a single statement figure with a strong silhouette, such as the Deer Pair or the Palanquin Bearers.",
+      "Raise it on a wooden console at eye level and keep the surface around it clear.",
+      "Hand-cast door handles and a key hook carry the craft onto the door itself.",
+    ],
+    image: livingFoyer,
+    pieces: ["antlered-elegance-deer-pair", "palanquin-bearers", "nandi-mayur-gaja-home-fittings", "gramya"],
+  },
+  {
+    slug: "living-room",
+    name: "The Living Room",
+    kicker: "Stories for the coffee table",
+    intro: "Folk scenes in brass invite conversation. Long, low pieces suit coffee tables and media units.",
+    tips: [
+      "Long compositions such as Mayur Tarini or Gorur Gari sit well on a low table, viewed from above.",
+      "Group small figures in odd numbers — three Tribal Tales figures feel collected, not arranged.",
+      "Pair warm brass with linen, jute and dark wood; let the metal be the only shine in the room.",
+    ],
+    image: livingRoom,
+    pieces: ["mayur-tarini", "gorur-gari", "tribal-tales", "mayur-dance-of-elegance"],
+  },
+  {
+    slug: "sacred-space",
+    name: "The Sacred Space",
+    kicker: "Puja room and altar",
+    intro: "Deities are made to be lived with. A calm, uncluttered altar lets every hand-laid detail be seen.",
+    tips: [
+      "Anchor the space with one central deity and keep supporting pieces smaller.",
+      "Bring in light — a lamp bearer with five diyas warms the brass in the evening.",
+      "Place the shankh on the altar as a sign of auspicious beginnings.",
+    ],
+    image: livingSacred,
+    pieces: ["durga-parivar", "lakshmi-saraswati", "panchdeep-lamp-bearer", "durga-shankh", "standing-ganesha"],
+  },
+  {
+    slug: "dining",
+    name: "The Dining Table",
+    kicker: "Craft you touch every day",
+    intro: "Heritage belongs at the table too — in the cutlery you hold and the light you dine by.",
+    tips: [
+      "Set Bhoj cutlery on handloom runners for festive meals and everyday dinners alike.",
+      "A candle stand as a centrepiece brings ritual to the table without crowding it.",
+    ],
+    image: livingDining,
+    pieces: ["bhoj-cutlery-set", "dashanan-ravan-candle-stand", "panchdeep-lamp-bearer"],
+  },
+  {
+    slug: "study",
+    name: "The Study & Office",
+    kicker: "Quiet companions for work",
+    intro: "Small, tactile pieces bring calm and character to a desk or bookshelf.",
+    tips: [
+      "Ganesha, for beginnings, is a natural companion for a workspace.",
+      "Owls and turtles — wisdom and long life — sit well between books on a shelf.",
+      "A pen stand and ash tray in brass make the desk itself a piece of craft.",
+    ],
+    image: livingStudy,
+    pieces: ["shankh-ash-tray-ganesha-pen-stand", "takia-ganesh", "kachhua-turtle-collection", "pecha-owl-collection"],
+  },
+  {
+    slug: "contemporary-abroad",
+    name: "A Contemporary Home, Anywhere",
+    kicker: "For homes outside India",
+    intro: "In a minimal apartment in London, Dubai or New York, one heirloom piece becomes the room's centre of gravity.",
+    tips: [
+      "Let a large Exclusive Collection piece stand alone on a plinth or sideboard against a plain wall.",
+      "Warm, low light brings out the wirework that overhead light flattens.",
+      "Ask us about export packing and documentation for international delivery.",
+    ],
+    image: livingGlobal,
+    pieces: ["aagomoni", "durga-darbar", "antlered-elegance-deer-pair", "mayur-tarini"],
+  },
+];
 
 /* ---------------------------------------------------------------- journal */
 

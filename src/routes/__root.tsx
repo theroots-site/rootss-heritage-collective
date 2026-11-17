@@ -11,26 +11,22 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { SiteHeader } from "../components/site/SiteHeader";
+import { AnnouncementBar, SiteHeader } from "../components/site/SiteHeader";
+import { WhatsAppFloat } from "../components/site/WhatsApp";
+import { ShortlistProvider } from "../lib/shortlist";
 import { SiteFooter } from "../components/site/SiteFooter";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-[60vh] items-center justify-center bg-background px-6 py-24">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
+        <p className="eyebrow text-rust">Page not found</p>
+        <h1 className="mt-4 text-5xl">This path has no piece at its end.</h1>
+        <p className="mt-4 text-muted-foreground">The page may have moved, or the link may be mistyped.</p>
+        <div className="mt-8 flex justify-center gap-4">
+          <Link to="/" className="eyebrow bg-forest px-6 py-4 text-forest-foreground">Return home</Link>
+          <Link to="/shop" className="eyebrow border border-foreground px-6 py-4">Browse the collection</Link>
         </div>
       </div>
     </div>
@@ -83,11 +79,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Rootss — Handcrafted Indian Heritage" },
-      { name: "description", content: "Authentic Dokra, terracotta, tribal art and handcrafted jewellery from India's artisans." },
-      { name: "author", content: "Rootss" },
-      { property: "og:title", content: "Rootss — Handcrafted Indian Heritage" },
-      { property: "og:description", content: "Authentic Dokra, terracotta, tribal art and handcrafted jewellery from India's artisans." },
+      { title: "the rootSS — Rooted in heritage. Crafted with heart." },
+      { name: "description", content: "Authentic handmade Indian craft for contemporary homes, beginning with Dhokra brass hand-cast by artisan families of Bengal." },
+      { name: "author", content: "the rootSS" },
+      { property: "og:site_name", content: "the rootSS" },
+      { property: "og:title", content: "the rootSS — Rooted in heritage. Crafted with heart." },
+      { property: "og:description", content: "Authentic handmade Indian craft for contemporary homes, beginning with Dhokra brass hand-cast by artisan families of Bengal." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -96,12 +93,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap",
       },
     ],
   }),
@@ -130,14 +127,18 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="grain flex min-h-screen flex-col bg-background text-foreground">
+      <ShortlistProvider>
+      <div className="flex min-h-screen flex-col bg-background text-foreground">
+        <AnnouncementBar />
         <SiteHeader />
         <main className="flex-1">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>
         <SiteFooter />
+        <WhatsAppFloat />
       </div>
+      </ShortlistProvider>
     </QueryClientProvider>
   );
 }
