@@ -1,24 +1,20 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 
-import artisanHands from "@/assets/artisan-hands.jpg";
-import terracotta from "@/assets/craft-terracotta.jpg";
-import { PageIntro } from "@/components/site/PageIntro";
-import { crafts } from "@/lib/catalog";
+import { photo } from "@/lib/images";
+import { PageHero, SectionHeading } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Our Story — Rootss, Indian Heritage Crafts" },
+      { title: "Our Story — the rootSS, a House of Indian Heritage Craft" },
       {
         name: "description",
-        content: "Why Rootss exists: preserving India's traditional crafts and supporting artisan livelihoods through conscious buying.",
+        content:
+          "Why the rootSS exists: to bring authentic Indian craftsmanship into contemporary homes, support artisan families and keep traditional crafts alive.",
       },
-      { property: "og:title", content: "Our Story — Rootss" },
-      {
-        property: "og:description",
-        content: "Bridging traditional craftsmanship with contemporary lifestyles — and the artisans who make it possible.",
-      },
+      { property: "og:title", content: "Our Story — the rootSS" },
+      { property: "og:description", content: "Rooted in heritage. Crafted with heart." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -27,86 +23,110 @@ export const Route = createFileRoute("/about")({
 });
 
 const values = [
-  { title: "Authenticity", body: "Every piece is genuinely handmade by traditional artisans — never machine copies of a craft." },
-  { title: "Fair livelihoods", body: "We buy directly from artisan families and clusters, so more of each sale returns to the maker." },
-  { title: "Preservation", body: "When a craft has buyers, its next generation keeps learning. Conscious buying keeps traditions alive." },
-  { title: "Accessible luxury", body: "Exclusive, artistic pieces priced for people who value meaning — not inflated luxury mark-ups." },
+  { title: "Authenticity", text: "Real craft, made by hand by the communities who carry it — never mass-produced imitation." },
+  { title: "Artisan dignity", text: "Bringing artisans' work to new homes so they can earn a dignified living from their skill." },
+  { title: "One of a kind", text: "We celebrate the small variations that make every handmade piece unique." },
+  { title: "Made for today", text: "Heritage chosen and presented for contemporary homes, in India and around the world." },
 ];
 
 function About() {
   return (
     <>
-      <PageIntro eyebrow="Our Story" title={<>We are the <em className="text-primary">roots</em> behind the room.</>}>
-        Rootss began with a simple belief: India's crafts deserve a place in modern homes — not as souvenirs, but as
-        art you live with every day.
-      </PageIntro>
+      <PageHero
+        kicker="Our story"
+        title={
+          <>
+            Rooted in heritage. <em>Crafted with heart.</em>
+          </>
+        }
+        intro="the rootSS brings India's traditional craftsmanship into contemporary homes and lifestyles — as affordable luxury, made by hand."
+        image={photo("durga-parivar")}
+        imageAlt="Durga Parivar in Dhokra brass"
+      />
 
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 pb-24 md:px-10 lg:grid-cols-12">
-        <img
-          src={artisanHands}
-          alt="An artisan shaping a Dokra brass figure"
-          width={1152}
-          height={1408}
-          className="aspect-[4/5] w-full object-cover lg:col-span-7"
-        />
-        <div className="space-y-6 text-lg leading-relaxed text-muted-foreground lg:col-span-5 lg:pt-16">
-          <p className="font-display text-3xl leading-snug text-foreground">
-            “Our audience doesn't simply buy products. They invest in stories, heritage, individuality — and the future of
-            Indian craft.”
+      <section className="mx-auto grid max-w-7xl gap-14 px-6 py-24 md:px-10 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <SectionHeading kicker="Our philosophy" title="Objects shaped by time, meant to be lived with" />
+        </div>
+        <div className="space-y-5 text-lg text-muted-foreground lg:col-span-7">
+          <p>
+            The works in our collection are not decorative artifacts. They are living expressions of lineage — objects
+            shaped by time, meant to be lived with rather than observed from a distance.
           </p>
           <p>
-            Across India, artisan communities hold knowledge that has passed from parent to child for generations: how to
-            cast brass from wax, how to read river clay, how to tell a forest's story in dots of pigment.
-          </p>
-          <p>
-            Mass production threatens all of it. Rootss exists to connect these makers with a discerning audience —
-            collectors, designers, architects and people who simply love beautiful, meaningful things.
+            We believe a home is richer for the stories it holds. A Dhokra Durga cast in a mould that was broken to set
+            it free; an owl whose every feather was first a thread of wax — these are pieces of heritage you can live
+            beside every day.
           </p>
         </div>
       </section>
 
-      <section className="bg-umber text-umber-foreground">
-        <div className="mx-auto max-w-7xl px-6 py-24 md:px-10">
-          <p className="eyebrow text-brass">What we stand for</p>
-          <div className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-            {values.map((v, i) => (
-              <div key={v.title} className="border-t border-umber-foreground/20 pt-6">
-                <span className="font-display text-2xl italic text-brass">0{i + 1}</span>
-                <h2 className="mt-3 text-3xl">{v.title}</h2>
-                <p className="mt-3 opacity-70">{v.body}</p>
-              </div>
-            ))}
+      <section className="bg-forest text-forest-foreground">
+        <div className="mx-auto grid max-w-7xl gap-14 px-6 py-24 md:px-10 lg:grid-cols-2">
+          <div>
+            <p className="eyebrow text-brass">Why the rootSS exists</p>
+            <h2 className="mt-4 text-4xl leading-tight md:text-5xl">
+              Keeping the art alive, <em>one piece at a time</em>.
+            </h2>
+          </div>
+          <div className="space-y-5 text-lg opacity-85">
+            <p>Dhokra is a slow, skilled craft. One piece can take days or weeks to make.</p>
+            <p>Many master artisans struggle to find buyers, and young people are leaving the craft.</p>
+            <p>
+              We bring their work to new homes, helping artisans earn a dignified living and giving the next generation a
+              reason to carry the art forward. Every purchase supports an artisan family.
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-24 md:px-10 lg:grid-cols-2 lg:items-center">
-        <div>
-          <p className="eyebrow text-primary">The crafts we champion</p>
-          <h2 className="mt-4 text-5xl leading-tight">Five traditions, hundreds of hands.</h2>
-          <ul className="mt-10 divide-y divide-border border-y border-border">
-            {crafts.map((c) => (
-              <li key={c.slug}>
-                <Link to="/shop" search={{ craft: c.slug }} className="group flex items-baseline justify-between gap-6 py-5">
-                  <span className="font-display text-2xl group-hover:text-primary">{c.name}</span>
-                  <span className="eyebrow text-muted-foreground">{c.origin}</span>
-                </Link>
+      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-24 md:px-10 md:grid-cols-2">
+        <div className="border border-border p-10">
+          <p className="eyebrow text-rust">Vision</p>
+          <p className="mt-5 font-display text-3xl leading-snug">
+            A world where India's living craft traditions are valued, collected and lived with — in homes everywhere.
+          </p>
+        </div>
+        <div className="border border-border p-10">
+          <p className="eyebrow text-rust">Mission</p>
+          <p className="mt-5 font-display text-3xl leading-snug">
+            To make authentic, handmade Indian craft accessible as affordable luxury, while supporting the artisan
+            families who make it.
+          </p>
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-paper">
+        <div className="mx-auto max-w-7xl px-6 py-24 md:px-10">
+          <SectionHeading kicker="Our values" title="What we hold to" />
+          <ul className="mt-12 grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
+            {values.map((v) => (
+              <li key={v.title} className="bg-paper p-8">
+                <h3 className="text-2xl">{v.title}</h3>
+                <p className="mt-3 text-muted-foreground">{v.text}</p>
               </li>
             ))}
           </ul>
         </div>
-        <img src={terracotta} alt="Handmade Bankura terracotta vessels" loading="lazy" className="aspect-[4/5] w-full object-cover" />
       </section>
 
-      <section className="mx-auto max-w-4xl px-6 pb-28 text-center">
-        <div className="motif-line mx-auto w-24" />
-        <h2 className="mt-10 text-5xl leading-tight">Bring a story home.</h2>
-        <Link
-          to="/shop"
-          className="eyebrow mt-8 inline-flex items-center gap-3 bg-primary px-8 py-4 text-primary-foreground shadow-soft"
-        >
-          Explore the collection <ArrowRight className="h-4 w-4" />
-        </Link>
+      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:px-10 lg:grid-cols-2 lg:items-center">
+        <img src={photo("artisans-at-work")} alt="Artisans in a Dhokra workshop" loading="lazy" className="aspect-[4/3] w-full object-cover" />
+        <div>
+          <SectionHeading
+            kicker="A house of many crafts"
+            title="Beginning with Dhokra"
+            intro="Our first line, The Heritage Collection, is authentic Dhokra metal craft sourced from the artisans of Bengal. Terracotta, tribal art and sculpture will follow."
+          />
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link to="/crafts" className="eyebrow inline-flex items-center gap-3 bg-forest px-7 py-4 text-forest-foreground">
+              The art of craft <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link to="/shop" className="eyebrow inline-flex items-center gap-3 border border-foreground px-7 py-4">
+              Shop the collection
+            </Link>
+          </div>
+        </div>
       </section>
     </>
   );

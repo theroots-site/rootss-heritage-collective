@@ -11,9 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ArtisansRouteImport } from './routes/artisans'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ExclusiveRouteImport } from './routes/exclusive'
+import { Route as LivingWithArtRouteImport } from './routes/living-with-art'
 import { Route as TradeRouteImport } from './routes/trade'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
+import { Route as CraftsIndexRouteImport } from './routes/crafts.index'
+import { Route as CraftsLineRouteImport } from './routes/crafts.$line'
 import { Route as JournalIndexRouteImport } from './routes/journal.index'
 import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
@@ -29,9 +34,24 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ArtisansRoute = ArtisansRouteImport.update({
+  id: '/artisans',
+  path: '/artisans',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExclusiveRoute = ExclusiveRouteImport.update({
+  id: '/exclusive',
+  path: '/exclusive',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LivingWithArtRoute = LivingWithArtRouteImport.update({
+  id: '/living-with-art',
+  path: '/living-with-art',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TradeRoute = TradeRouteImport.update({
@@ -42,6 +62,16 @@ const TradeRoute = TradeRouteImport.update({
 const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
   id: '/collections/$slug',
   path: '/collections/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CraftsIndexRoute = CraftsIndexRouteImport.update({
+  id: '/crafts/',
+  path: '/crafts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CraftsLineRoute = CraftsLineRouteImport.update({
+  id: '/crafts/$line',
+  path: '/crafts/$line',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JournalIndexRoute = JournalIndexRouteImport.update({
@@ -68,22 +98,32 @@ const ShopSlugRoute = ShopSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/artisans': typeof ArtisansRoute
   '/contact': typeof ContactRoute
+  '/exclusive': typeof ExclusiveRoute
+  '/living-with-art': typeof LivingWithArtRoute
   '/trade': typeof TradeRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/crafts/$line': typeof CraftsLineRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
+  '/crafts/': typeof CraftsIndexRoute
   '/journal/': typeof JournalIndexRoute
   '/shop/': typeof ShopIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/artisans': typeof ArtisansRoute
   '/contact': typeof ContactRoute
+  '/exclusive': typeof ExclusiveRoute
+  '/living-with-art': typeof LivingWithArtRoute
   '/trade': typeof TradeRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/crafts/$line': typeof CraftsLineRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
+  '/crafts': typeof CraftsIndexRoute
   '/journal': typeof JournalIndexRoute
   '/shop': typeof ShopIndexRoute
 }
@@ -91,11 +131,16 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/artisans': typeof ArtisansRoute
   '/contact': typeof ContactRoute
+  '/exclusive': typeof ExclusiveRoute
+  '/living-with-art': typeof LivingWithArtRoute
   '/trade': typeof TradeRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/crafts/$line': typeof CraftsLineRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
+  '/crafts/': typeof CraftsIndexRoute
   '/journal/': typeof JournalIndexRoute
   '/shop/': typeof ShopIndexRoute
 }
@@ -104,33 +149,48 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/artisans'
     | '/contact'
+    | '/exclusive'
+    | '/living-with-art'
     | '/trade'
     | '/collections/$slug'
+    | '/crafts/$line'
     | '/journal/$slug'
     | '/shop/$slug'
+    | '/crafts/'
     | '/journal/'
     | '/shop/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/artisans'
     | '/contact'
+    | '/exclusive'
+    | '/living-with-art'
     | '/trade'
     | '/collections/$slug'
+    | '/crafts/$line'
     | '/journal/$slug'
     | '/shop/$slug'
+    | '/crafts'
     | '/journal'
     | '/shop'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/artisans'
     | '/contact'
+    | '/exclusive'
+    | '/living-with-art'
     | '/trade'
     | '/collections/$slug'
+    | '/crafts/$line'
     | '/journal/$slug'
     | '/shop/$slug'
+    | '/crafts/'
     | '/journal/'
     | '/shop/'
   fileRoutesById: FileRoutesById
@@ -138,11 +198,16 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ArtisansRoute: typeof ArtisansRoute
   ContactRoute: typeof ContactRoute
+  ExclusiveRoute: typeof ExclusiveRoute
+  LivingWithArtRoute: typeof LivingWithArtRoute
   TradeRoute: typeof TradeRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
+  CraftsLineRoute: typeof CraftsLineRoute
   JournalSlugRoute: typeof JournalSlugRoute
   ShopSlugRoute: typeof ShopSlugRoute
+  CraftsIndexRoute: typeof CraftsIndexRoute
   JournalIndexRoute: typeof JournalIndexRoute
   ShopIndexRoute: typeof ShopIndexRoute
 }
@@ -163,11 +228,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/artisans': {
+      id: '/artisans'
+      path: '/artisans'
+      fullPath: '/artisans'
+      preLoaderRoute: typeof ArtisansRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/exclusive': {
+      id: '/exclusive'
+      path: '/exclusive'
+      fullPath: '/exclusive'
+      preLoaderRoute: typeof ExclusiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/living-with-art': {
+      id: '/living-with-art'
+      path: '/living-with-art'
+      fullPath: '/living-with-art'
+      preLoaderRoute: typeof LivingWithArtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/trade': {
@@ -182,6 +268,20 @@ declare module '@tanstack/react-router' {
       path: '/collections/$slug'
       fullPath: '/collections/$slug'
       preLoaderRoute: typeof CollectionsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crafts/': {
+      id: '/crafts/'
+      path: '/crafts'
+      fullPath: '/crafts/'
+      preLoaderRoute: typeof CraftsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/crafts/$line': {
+      id: '/crafts/$line'
+      path: '/crafts/$line'
+      fullPath: '/crafts/$line'
+      preLoaderRoute: typeof CraftsLineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/journal/': {
@@ -218,11 +318,16 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ArtisansRoute: ArtisansRoute,
   ContactRoute: ContactRoute,
+  ExclusiveRoute: ExclusiveRoute,
+  LivingWithArtRoute: LivingWithArtRoute,
   TradeRoute: TradeRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
+  CraftsLineRoute: CraftsLineRoute,
   JournalSlugRoute: JournalSlugRoute,
   ShopSlugRoute: ShopSlugRoute,
+  CraftsIndexRoute: CraftsIndexRoute,
   JournalIndexRoute: JournalIndexRoute,
   ShopIndexRoute: ShopIndexRoute,
 }
