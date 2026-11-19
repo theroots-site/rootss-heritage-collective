@@ -12,10 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ArtisansRouteImport } from './routes/artisans'
+import { Route as BespokeRouteImport } from './routes/bespoke'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ExclusiveRouteImport } from './routes/exclusive'
 import { Route as LivingWithArtRouteImport } from './routes/living-with-art'
+import { Route as ShortlistRouteImport } from './routes/shortlist'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TradeRouteImport } from './routes/trade'
+import { Route as CareIndexRouteImport } from './routes/care.index'
+import { Route as CareTopicRouteImport } from './routes/care.$topic'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as CraftsIndexRouteImport } from './routes/crafts.index'
 import { Route as CraftsLineRouteImport } from './routes/crafts.$line'
@@ -39,6 +44,11 @@ const ArtisansRoute = ArtisansRouteImport.update({
   path: '/artisans',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BespokeRoute = BespokeRouteImport.update({
+  id: '/bespoke',
+  path: '/bespoke',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -54,9 +64,29 @@ const LivingWithArtRoute = LivingWithArtRouteImport.update({
   path: '/living-with-art',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShortlistRoute = ShortlistRouteImport.update({
+  id: '/shortlist',
+  path: '/shortlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TradeRoute = TradeRouteImport.update({
   id: '/trade',
   path: '/trade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareIndexRoute = CareIndexRouteImport.update({
+  id: '/care/',
+  path: '/care/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareTopicRoute = CareTopicRouteImport.update({
+  id: '/care/$topic',
+  path: '/care/$topic',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
@@ -99,14 +129,19 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
+  '/bespoke': typeof BespokeRoute
   '/contact': typeof ContactRoute
   '/exclusive': typeof ExclusiveRoute
   '/living-with-art': typeof LivingWithArtRoute
+  '/shortlist': typeof ShortlistRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trade': typeof TradeRoute
+  '/care/$topic': typeof CareTopicRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/crafts/$line': typeof CraftsLineRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
+  '/care/': typeof CareIndexRoute
   '/crafts/': typeof CraftsIndexRoute
   '/journal/': typeof JournalIndexRoute
   '/shop/': typeof ShopIndexRoute
@@ -115,14 +150,19 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
+  '/bespoke': typeof BespokeRoute
   '/contact': typeof ContactRoute
   '/exclusive': typeof ExclusiveRoute
   '/living-with-art': typeof LivingWithArtRoute
+  '/shortlist': typeof ShortlistRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trade': typeof TradeRoute
+  '/care/$topic': typeof CareTopicRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/crafts/$line': typeof CraftsLineRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
+  '/care': typeof CareIndexRoute
   '/crafts': typeof CraftsIndexRoute
   '/journal': typeof JournalIndexRoute
   '/shop': typeof ShopIndexRoute
@@ -132,14 +172,19 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/artisans': typeof ArtisansRoute
+  '/bespoke': typeof BespokeRoute
   '/contact': typeof ContactRoute
   '/exclusive': typeof ExclusiveRoute
   '/living-with-art': typeof LivingWithArtRoute
+  '/shortlist': typeof ShortlistRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/trade': typeof TradeRoute
+  '/care/$topic': typeof CareTopicRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/crafts/$line': typeof CraftsLineRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
+  '/care/': typeof CareIndexRoute
   '/crafts/': typeof CraftsIndexRoute
   '/journal/': typeof JournalIndexRoute
   '/shop/': typeof ShopIndexRoute
@@ -150,14 +195,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/artisans'
+    | '/bespoke'
     | '/contact'
     | '/exclusive'
     | '/living-with-art'
+    | '/shortlist'
+    | '/sitemap.xml'
     | '/trade'
+    | '/care/$topic'
     | '/collections/$slug'
     | '/crafts/$line'
     | '/journal/$slug'
     | '/shop/$slug'
+    | '/care/'
     | '/crafts/'
     | '/journal/'
     | '/shop/'
@@ -166,14 +216,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/artisans'
+    | '/bespoke'
     | '/contact'
     | '/exclusive'
     | '/living-with-art'
+    | '/shortlist'
+    | '/sitemap.xml'
     | '/trade'
+    | '/care/$topic'
     | '/collections/$slug'
     | '/crafts/$line'
     | '/journal/$slug'
     | '/shop/$slug'
+    | '/care'
     | '/crafts'
     | '/journal'
     | '/shop'
@@ -182,14 +237,19 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/artisans'
+    | '/bespoke'
     | '/contact'
     | '/exclusive'
     | '/living-with-art'
+    | '/shortlist'
+    | '/sitemap.xml'
     | '/trade'
+    | '/care/$topic'
     | '/collections/$slug'
     | '/crafts/$line'
     | '/journal/$slug'
     | '/shop/$slug'
+    | '/care/'
     | '/crafts/'
     | '/journal/'
     | '/shop/'
@@ -199,14 +259,19 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ArtisansRoute: typeof ArtisansRoute
+  BespokeRoute: typeof BespokeRoute
   ContactRoute: typeof ContactRoute
   ExclusiveRoute: typeof ExclusiveRoute
   LivingWithArtRoute: typeof LivingWithArtRoute
+  ShortlistRoute: typeof ShortlistRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TradeRoute: typeof TradeRoute
+  CareTopicRoute: typeof CareTopicRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   CraftsLineRoute: typeof CraftsLineRoute
   JournalSlugRoute: typeof JournalSlugRoute
   ShopSlugRoute: typeof ShopSlugRoute
+  CareIndexRoute: typeof CareIndexRoute
   CraftsIndexRoute: typeof CraftsIndexRoute
   JournalIndexRoute: typeof JournalIndexRoute
   ShopIndexRoute: typeof ShopIndexRoute
@@ -235,6 +300,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ArtisansRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bespoke': {
+      id: '/bespoke'
+      path: '/bespoke'
+      fullPath: '/bespoke'
+      preLoaderRoute: typeof BespokeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -256,11 +328,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LivingWithArtRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/shortlist': {
+      id: '/shortlist'
+      path: '/shortlist'
+      fullPath: '/shortlist'
+      preLoaderRoute: typeof ShortlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/trade': {
       id: '/trade'
       path: '/trade'
       fullPath: '/trade'
       preLoaderRoute: typeof TradeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/care/': {
+      id: '/care/'
+      path: '/care'
+      fullPath: '/care/'
+      preLoaderRoute: typeof CareIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/care/$topic': {
+      id: '/care/$topic'
+      path: '/care/$topic'
+      fullPath: '/care/$topic'
+      preLoaderRoute: typeof CareTopicRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collections/$slug': {
@@ -319,14 +419,19 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ArtisansRoute: ArtisansRoute,
+  BespokeRoute: BespokeRoute,
   ContactRoute: ContactRoute,
   ExclusiveRoute: ExclusiveRoute,
   LivingWithArtRoute: LivingWithArtRoute,
+  ShortlistRoute: ShortlistRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TradeRoute: TradeRoute,
+  CareTopicRoute: CareTopicRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   CraftsLineRoute: CraftsLineRoute,
   JournalSlugRoute: JournalSlugRoute,
   ShopSlugRoute: ShopSlugRoute,
+  CareIndexRoute: CareIndexRoute,
   CraftsIndexRoute: CraftsIndexRoute,
   JournalIndexRoute: JournalIndexRoute,
   ShopIndexRoute: ShopIndexRoute,

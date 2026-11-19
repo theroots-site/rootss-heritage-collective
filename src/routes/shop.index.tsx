@@ -16,10 +16,10 @@ import { PageHero } from "@/components/site/PageHero";
 type Sort = "curated" | "name-asc" | "name-desc" | "size-desc";
 
 type ShopSearch = {
-  q?: string;
-  collection?: CollectionSlug;
-  availability?: Availability;
-  sort?: Sort;
+  q?: string | undefined;
+  collection?: CollectionSlug | undefined;
+  availability?: Availability | undefined;
+  sort?: Sort | undefined;
 };
 
 const collectionSlugs = collections.map((c) => c.slug) as string[];
@@ -31,7 +31,7 @@ const sorts: { value: Sort; label: string }[] = [
   { value: "size-desc", label: "Largest first" },
 ];
 
-export function sortProducts(list: Product[], sort: Sort | undefined): Product[] {
+function sortProducts(list: Product[], sort: Sort | undefined): Product[] {
   const height = (p: Product) => {
     const m = p.size?.match(/(\d+(?:\.\d+)?)/);
     return m ? Number(m[1]) : -1;
@@ -73,18 +73,10 @@ export const Route = createFileRoute("/shop/")({
   component: Shop,
 });
 
-function Chip({ active, children, ...link }: { active: boolean; children: React.ReactNode } & React.ComponentProps<typeof Link>) {
-  return (
-    <Link
-      {...link}
-      className={`eyebrow whitespace-nowrap border px-4 py-2.5 transition-colors ${
-        active ? "border-forest bg-forest text-forest-foreground" : "border-border hover:border-foreground"
-      }`}
-    >
-      {children}
-    </Link>
-  );
-}
+const chipCls = (active: boolean) =>
+  `eyebrow whitespace-nowrap border px-4 py-2.5 transition-colors ${
+    active ? "border-forest bg-forest text-forest-foreground" : "border-border hover:border-foreground"
+  }`;
 
 function Shop() {
   const search = Route.useSearch();
@@ -110,13 +102,13 @@ function Shop() {
         <div className="sticky top-[4.6rem] z-20 -mx-6 border-y border-border bg-background/95 px-6 py-4 backdrop-blur-md md:-mx-10 md:px-10 lg:top-[8.1rem]">
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
             <div className="no-scrollbar flex gap-2 overflow-x-auto">
-              <Chip to="/shop" search={(prev) => ({ ...prev, collection: undefined })} active={!search.collection}>
+              <Link to="/shop" search={{ ...search, collection: undefined }} className={chipCls(!search.collection)}>
                 All
-              </Chip>
+              </Link>
               {collections.map((c) => (
-                <Chip key={c.slug} to="/shop" search={(prev) => ({ ...prev, collection: c.slug })} active={search.collection === c.slug}>
+                <Link key={c.slug} to="/shop" search={{ ...search, collection: c.slug }} className={chipCls(search.collection === c.slug)}>
                   {c.name}
-                </Chip>
+                </Link>
               ))}
             </div>
             <div className="flex flex-wrap items-center gap-3">

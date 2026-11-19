@@ -21,7 +21,7 @@ export function AnnouncementBar() {
   return (
     <div className="bg-forest text-forest-foreground">
       <p className="eyebrow mx-auto max-w-7xl truncate px-6 py-2.5 text-center text-[0.62rem] opacity-90 md:px-10">
-        Authentic Dhokra, hand-cast by artisan families of Bengal
+        Authentic Dhokra<span className="hidden sm:inline">, hand-cast by artisan families of Bengal</span>
         <span className="mx-3 text-brass">·</span>
         <span className="hidden sm:inline">Shipping across India & worldwide</span>
         <span className="mx-3 hidden text-brass sm:inline">·</span>
