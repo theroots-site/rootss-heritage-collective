@@ -32,3 +32,11 @@ use the editor.
 ## Project rules
 - Product, craft and journal content lives in `src/lib/catalog.ts` as static data; pages read from it so content edits happen in one place.
 - Shared header/footer render in `src/routes/__root.tsx`; pages render only their own sections.
+- Catalogue photos are CDN pointers in `src/assets/catalogue/`, resolved by name via `photo()` in `src/lib/images.ts`; keeps product data free of 50+ imports.
+- Craft lines, collections and products are separate layers (`lines` → `collections` → `products`) so new craft lines need data only, no redesign.
+- Price is `null` unless the owner confirmed it; UI shows "Enquire for price". Missing catalogue code/size stays `null` and shows "Confirmed on enquiry" — never invent values.
+- Contact details and social links live in `src/lib/site.ts`; null social links render nothing (no dead buttons).
+- WhatsApp messages are built in `src/lib/whatsapp.ts` and always include product name + code; covered by `src/test/whatsapp.test.ts`.
+- All forms submit through `submitEnquiry` (`src/lib/enquiries.functions.ts`) into the `enquiries` table; visitors have insert-only access (no read policy), using the publishable key rather than the admin client.
+- Shortlist is browser-local (`src/lib/shortlist.tsx`), read after hydration to avoid SSR mismatch.
+- Client-care copy lives in `src/lib/care.ts`; topics with catalogue "conditions apply" terms set `pendingApproval` and show a notice.
