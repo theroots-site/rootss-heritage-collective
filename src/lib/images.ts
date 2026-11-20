@@ -1,18 +1,30 @@
-// Catalogue photographs are CDN asset pointers; this maps "durga-parivar" -> its URL.
-const pointers = import.meta.glob<{ url: string }>("../assets/catalogue/*.asset.json", {
-  eager: true,
-  import: "default",
-});
+// Every site image lives in the "rootss-images" Lovable Cloud folder and is served from
+// this site at /images/<folder>/<file> (see src/routes/images.$.tsx), so each one has a
+// stable, shareable link. Folders: catalogue/, lifestyle/, brand/, products/ (admin uploads).
+export const IMAGE_BUCKET = "rootss-images";
+export const imageFolders = ["catalogue", "products", "lifestyle", "brand"] as const;
+export type ImageFolder = (typeof imageFolders)[number];
 
-const byName: Record<string, string> = {};
-for (const [path, pointer] of Object.entries(pointers)) {
-  const file = path.split("/").pop() ?? "";
-  const name = file.replace(/\.(jpg|png)\.asset\.json$/, "");
-  byName[name] = pointer.url;
+export function imageUrl(path: string): string {
+  return `/images/${path.replace(/^\/+/, "")}`;
 }
 
+/** Catalogue photograph by name, e.g. photo("durga-parivar"). */
 export function photo(name: string): string {
-  const url = byName[name];
-  if (!url) throw new Error(`Missing catalogue photo: ${name}`);
-  return url;
+  return name === "the-rootss-logo" ? imageUrl("brand/the-rootss-logo.png") : imageUrl(`catalogue/${name}.jpg`);
+}
+
+export function lifestyle(name: string): string {
+  return imageUrl(`lifestyle/${name}.jpg`);
+}
+
+/** Safe storage path check for the image route: lowercase folders/files, no traversal. */
+export function isSafeImagePath(path: string): boolean {
+  return (
+    path.length > 0 &&
+    path.length <= 300 &&
+    /^[a-z0-9][a-z0-9/_.-]*$/i.test(path) &&
+    !path.includes("..") &&
+    !path.includes("//")
+  );
 }

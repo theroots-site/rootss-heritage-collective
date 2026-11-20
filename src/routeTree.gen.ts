@@ -24,6 +24,7 @@ import { Route as CareTopicRouteImport } from './routes/care.$topic'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as CraftsIndexRouteImport } from './routes/crafts.index'
 import { Route as CraftsLineRouteImport } from './routes/crafts.$line'
+import { Route as ImagesSplatRouteImport } from './routes/images.$'
 import { Route as JournalIndexRouteImport } from './routes/journal.index'
 import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
 import { Route as ShopIndexRouteImport } from './routes/shop.index'
@@ -104,6 +105,11 @@ const CraftsLineRoute = CraftsLineRouteImport.update({
   path: '/crafts/$line',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImagesSplatRoute = ImagesSplatRouteImport.update({
+  id: '/images/$',
+  path: '/images/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JournalIndexRoute = JournalIndexRouteImport.update({
   id: '/journal/',
   path: '/journal/',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/care/$topic': typeof CareTopicRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/crafts/$line': typeof CraftsLineRoute
+  '/images/$': typeof ImagesSplatRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/care/': typeof CareIndexRoute
@@ -160,6 +167,7 @@ export interface FileRoutesByTo {
   '/care/$topic': typeof CareTopicRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/crafts/$line': typeof CraftsLineRoute
+  '/images/$': typeof ImagesSplatRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/care': typeof CareIndexRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/care/$topic': typeof CareTopicRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/crafts/$line': typeof CraftsLineRoute
+  '/images/$': typeof ImagesSplatRoute
   '/journal/$slug': typeof JournalSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/care/': typeof CareIndexRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/care/$topic'
     | '/collections/$slug'
     | '/crafts/$line'
+    | '/images/$'
     | '/journal/$slug'
     | '/shop/$slug'
     | '/care/'
@@ -226,6 +236,7 @@ export interface FileRouteTypes {
     | '/care/$topic'
     | '/collections/$slug'
     | '/crafts/$line'
+    | '/images/$'
     | '/journal/$slug'
     | '/shop/$slug'
     | '/care'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/care/$topic'
     | '/collections/$slug'
     | '/crafts/$line'
+    | '/images/$'
     | '/journal/$slug'
     | '/shop/$slug'
     | '/care/'
@@ -269,6 +281,7 @@ export interface RootRouteChildren {
   CareTopicRoute: typeof CareTopicRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   CraftsLineRoute: typeof CraftsLineRoute
+  ImagesSplatRoute: typeof ImagesSplatRoute
   JournalSlugRoute: typeof JournalSlugRoute
   ShopSlugRoute: typeof ShopSlugRoute
   CareIndexRoute: typeof CareIndexRoute
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CraftsLineRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/images/$': {
+      id: '/images/$'
+      path: '/images/$'
+      fullPath: '/images/$'
+      preLoaderRoute: typeof ImagesSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/journal/': {
       id: '/journal/'
       path: '/journal'
@@ -429,6 +449,7 @@ const rootRouteChildren: RootRouteChildren = {
   CareTopicRoute: CareTopicRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   CraftsLineRoute: CraftsLineRoute,
+  ImagesSplatRoute: ImagesSplatRoute,
   JournalSlugRoute: JournalSlugRoute,
   ShopSlugRoute: ShopSlugRoute,
   CareIndexRoute: CareIndexRoute,

@@ -1,13 +1,7 @@
 // All product, craft-line, collection, room and journal content, taken from the
 // "the rootSS Catalogue 11.2026". Prices are null until the owner confirms them.
 // A null code or size means the catalogue leaves it blank: pages say "confirmed on enquiry".
-import { photo } from "./images";
-import livingFoyer from "@/assets/living-foyer.jpg";
-import livingRoom from "@/assets/living-room.jpg";
-import livingSacred from "@/assets/living-sacred.jpg";
-import livingDining from "@/assets/living-dining.jpg";
-import livingStudy from "@/assets/living-study.jpg";
-import livingGlobal from "@/assets/living-global.jpg";
+import { lifestyle, photo } from "./images";
 
 /* ---------------------------------------------------------------- craft lines */
 
@@ -179,9 +173,13 @@ export function getCollection(slug: string) {
 
 /* ---------------------------------------------------------------- products */
 
-export type Availability = "pre-order" | "made-to-order" | "on-enquiry";
+export type Availability = "in-stock" | "pre-order" | "made-to-order" | "on-enquiry" | "sold-out";
+
+export const availabilities: Availability[] = ["in-stock", "on-enquiry", "made-to-order", "pre-order", "sold-out"];
 
 export const availabilityLabel: Record<Availability, string> = {
+  "in-stock": "In stock",
+  "sold-out": "Sold out",
   "pre-order": "Pre-order only",
   "made-to-order": "Made to order",
   "on-enquiry": "Availability on enquiry",
@@ -346,7 +344,7 @@ export const rooms: Room[] = [
       "Raise it on a wooden console at eye level and keep the surface around it clear.",
       "Hand-cast door handles and a key hook carry the craft onto the door itself.",
     ],
-    image: livingFoyer,
+    image: lifestyle("living-foyer"),
     pieces: ["antlered-elegance-deer-pair", "palanquin-bearers", "nandi-mayur-gaja-home-fittings", "gramya"],
   },
   {
@@ -359,7 +357,7 @@ export const rooms: Room[] = [
       "Group small figures in odd numbers — three Tribal Tales figures feel collected, not arranged.",
       "Pair warm brass with linen, jute and dark wood; let the metal be the only shine in the room.",
     ],
-    image: livingRoom,
+    image: lifestyle("living-room"),
     pieces: ["mayur-tarini", "gorur-gari", "tribal-tales", "mayur-dance-of-elegance"],
   },
   {
@@ -372,7 +370,7 @@ export const rooms: Room[] = [
       "Bring in light — a lamp bearer with five diyas warms the brass in the evening.",
       "Place the shankh on the altar as a sign of auspicious beginnings.",
     ],
-    image: livingSacred,
+    image: lifestyle("living-sacred"),
     pieces: ["durga-parivar", "lakshmi-saraswati", "panchdeep-lamp-bearer", "durga-shankh", "standing-ganesha"],
   },
   {
@@ -384,7 +382,7 @@ export const rooms: Room[] = [
       "Set Bhoj cutlery on handloom runners for festive meals and everyday dinners alike.",
       "A candle stand as a centrepiece brings ritual to the table without crowding it.",
     ],
-    image: livingDining,
+    image: lifestyle("living-dining"),
     pieces: ["bhoj-cutlery-set", "dashanan-ravan-candle-stand", "panchdeep-lamp-bearer"],
   },
   {
@@ -397,7 +395,7 @@ export const rooms: Room[] = [
       "Owls and turtles — wisdom and long life — sit well between books on a shelf.",
       "A pen stand and ash tray in brass make the desk itself a piece of craft.",
     ],
-    image: livingStudy,
+    image: lifestyle("living-study"),
     pieces: ["shankh-ash-tray-ganesha-pen-stand", "takia-ganesh", "kachhua-turtle-collection", "pecha-owl-collection"],
   },
   {
@@ -410,7 +408,7 @@ export const rooms: Room[] = [
       "Warm, low light brings out the wirework that overhead light flattens.",
       "Ask us about export packing and documentation for international delivery.",
     ],
-    image: livingGlobal,
+    image: lifestyle("living-global"),
     pieces: ["aagomoni", "durga-darbar", "antlered-elegance-deer-pair", "mayur-tarini"],
   },
 ];

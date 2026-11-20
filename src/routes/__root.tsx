@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
   type ErrorComponentProps,
@@ -16,6 +17,9 @@ import { WhatsAppFloat } from "../components/site/WhatsApp";
 import { ShortlistProvider } from "../lib/shortlist";
 import { SiteFooter } from "../components/site/SiteFooter";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { catalogueQuery } from "../lib/catalogue-live";
+import { supabase } from "../integrations/supabase/client";
+import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
   return (
@@ -72,6 +76,8 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  // Owner edits from the admin area, merged over the printed catalogue by every page.
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogueQuery),
   head: () => ({
     // Replace these placeholders with the app's name and description when first building the app.
     // Each content route, / included, must still set its own head(). Never add og:image or
@@ -124,20 +130,36 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  const isAdmin = useRouterState({ select: (s) => s.location.pathname.startsWith("/admin") });
+
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange((event) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      void router.invalidate();
+      if (event !== "SIGNED_OUT") void queryClient.invalidateQueries();
+    });
+    return () => data.subscription.unsubscribe();
+  }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>
       <ShortlistProvider>
-      <div className="flex min-h-screen flex-col bg-background text-foreground">
-        <AnnouncementBar />
-        <SiteHeader />
-        <main className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        {isAdmin ? (
           <Outlet />
-        </main>
-        <SiteFooter />
-        <WhatsAppFloat />
-      </div>
+        ) : (
+          <div className="flex min-h-screen flex-col bg-background text-foreground">
+            <AnnouncementBar />
+            <SiteHeader />
+            <main className="flex-1">
+              {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+              <Outlet />
+            </main>
+            <SiteFooter />
+            <WhatsAppFloat />
+          </div>
+        )}
+        <Toaster position="top-center" />
       </ShortlistProvider>
     </QueryClientProvider>
   );
