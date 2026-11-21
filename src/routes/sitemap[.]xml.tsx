@@ -6,8 +6,8 @@ import { collections, lines, posts, products } from "@/lib/catalog";
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
-        const origin = new URL(request.url).origin;
+      GET: async () => {
+        const origin = "https://roots-of-heritage.lovable.app";
         const paths = [
           "/",
           "/shop",
